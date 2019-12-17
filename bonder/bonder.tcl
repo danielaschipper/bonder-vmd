@@ -363,18 +363,18 @@ proc Bonder::launch {} {
   set name [file rootname [file tail [molinfo top get filename]]]
   switch $bondType {
     "line" {
-      exec bonder bond l [molinfo top get filename] $point1 $point2 $Bonder::res $Bonder::cutoff $output $Bonder::cube >@stdout
+      exec bonder line -i [molinfo top get filename] -1 $point1 -2 $point2 -r $Bonder::res -c $Bonder::cutoff -o $output -q $Bonder::cube >@stdout
     } "trig" {
       if {$point3 eq "" } {return }
-      exec bonder bond t [molinfo top get filename] $point1 $point2 $point3 $Bonder::res $Bonder::cutoff $output $Bonder::cube >@stdout
+      exec bonder bond trig -i [molinfo top get filename] -1 $point1 -2 $point2 -3 $point3 -r $Bonder::res -c $Bonder::cutoff -o $output -q $Bonder::cube >@stdout
     } "quad" {
       if {$point3 eq ""} {return }
       if {$point4 eq ""} {return }
-      exec bonder bond q [molinfo top get filename] $point1 $point2 $point3 $point4 $Bonder::res $Bonder::cutoff $output $Bonder::cube >@stdout
+      exec bonder bond quad -i [molinfo top get filename] -1 $point1 -2 $point2 -3 $point3 -4 $point4 -r $Bonder::res -c $Bonder::cutoff -o $output -q $Bonder::cube >@stdout
     }
   }
   cd [file rootname [file tail [molinfo top get filename]]]
-  exec bonder agenvmd $Bonder::cutoff $Bonder::minRho $Bonder::maxRho
+  exec  agenvmd $Bonder::cutoff $Bonder::minRho $Bonder::maxRho
   graphics top delete all
   source all.vmd
   Bonder::DrawChoose
