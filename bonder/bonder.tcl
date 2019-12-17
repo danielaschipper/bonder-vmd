@@ -434,14 +434,14 @@ proc Bonder::save {} {
   
   switch $bondType {
     "line" {
-      set outputtext "./bond l [molinfo top get filename] $point1 $point2 $Bonder::res $Bonder::cutoff output $Bonder::cube"
+      set outputtext "./bonder line -i [molinfo top get filename] -1 $point1 -2 $point2 -r $Bonder::res -c $Bonder::cutoff -o output -q $Bonder::cube"
     } "trig" {
       if {$point3 eq "" } {return }
-      set outputtext "./bond t [molinfo top get filename] $point1 $point2 $point3 $Bonder::res $Bonder::cutoff output $Bonder::cube"
+      set outputtext "./bonder trig -i [molinfo top get filename] -1 $point1 -2 $point2 -3 $point3 -r $Bonder::res -c $Bonder::cutoff -o output -q $Bonder::cube"
     } "quad" {
       if {$point3 eq ""} {return }
       if {$point4 eq ""} {return }
-       set outputtext "./bond q [molinfo top get filename] $point1 $point2 $point3 $point4 $Bonder::res $Bonder::cutoff output $Bonder::cube"
+       set outputtext "./bonder quad -i [molinfo top get filename] -1 $point1 -2 $point2 -3 $point3 -4 $point4 -r $Bonder::res -c $Bonder::cutoff -o output -q $Bonder::cube"
     }
   }
   file mkdir [file rootname [file tail [molinfo top get filename]]]
@@ -450,7 +450,7 @@ proc Bonder::save {} {
   close $outfile
   set bondFile  [exec which bonder]
   file copy -force [molinfo top get filename] [file rootname [file tail [molinfo top get filename]]]
-  file copy -force [file dirname $bondFile]/bond/bond [file rootname [file tail [molinfo top get filename]]]
+  file copy -force [file dirname $bondFile]/bonder [file rootname [file tail [molinfo top get filename]]]
 
   tk_messageBox -message "Bonder portable has been created in [file rootname [file tail [molinfo top get filename]]] run.sh will run it" -type ok -title done -parent $w
 }
