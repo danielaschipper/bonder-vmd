@@ -1,2 +1,4 @@
 To install the wfn reader run the install script with the path to the vmd libary path as an argument
 then edit your vmd startup script to register the bonder plugin on start up
+
+Finally copy genvmd into your PATH
